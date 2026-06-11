@@ -1,0 +1,168 @@
+{
+  "_version": "1.76.0",
+  "sap.app": {
+    "id": "zcacompanymanagement",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.19.3",
+      "toolsId": "ff25020f-a66e-4f6a-9425-54e9c7339ee4"
+    },
+    "dataSources": {
+      "ZODCA_COMPANY_MANAGEMEN_ANNO_MDL": {
+        "uri": "/zsrv_iwfnd/Annotations(TechnicalName='ZODCA_COMPANY_MANAGEMEN_ANNO_MDL',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZODCA_COMPANY_MANAGEMEN_ANNO_MDL.xml"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZODCA_COMPANY_MANAGEMENT_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZODCA_COMPANY_MANAGEMEN_ANNO_MDL",
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "fullWidth": true,
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.148.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.ui.comp": {},
+        "sap.ui.table": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zcacompanymanagement.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "zcacompanymanagement.view",
+        "async": true,
+        "viewPath": "zcacompanymanagement.view"
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "RouteMain",
+          "target": "Main"
+        },
+        {
+          "pattern": "create",
+          "name": "CompanyCreate",
+          "target": "Create"
+        },
+        {
+          "pattern": "display/{partner}",
+          "name": "CompanyDisplay",
+          "target": "Display"
+        },
+        {
+          "pattern": "edit/{partner}",
+          "name": "CompanyEdit",
+          "target": "Create"
+        },
+        {
+          "pattern": "NotFound",
+          "name": "NotFound",
+          "target": "NotFound"
+        }
+      ],
+      "targets": {
+        "Main": {
+          "id": "Main",
+          "name": "Main"
+        },
+        "Create": {
+          "viewId": "Create",
+          "viewName": "Create"
+        },
+        "Display": {
+          "id": "Display",
+          "name": "Display"
+        },
+        "NotFound": {
+          "viewName": "NotFound",
+          "viewType": "XML",
+          "transition": "show",
+          "clearControlAggregation": false,
+          "viewId": "NotFound"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "zcacompanymanagement.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

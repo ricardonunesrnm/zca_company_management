@@ -1,0 +1,329 @@
+
+<mvc:View
+    controllerName="zcacompanymanagement.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:sfb="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        toggleHeaderOnTitleClick="true"
+        headerExpanded="true"
+        preserveHeaderStateOnScroll="true"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="{i18n>companyHeader}"
+                        wrapping="true"
+                        level="H2"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <sfb:SmartFilterBar
+                    id="smartFilterBar"
+                    entitySet="ZCA_COMPANY"
+                    enableBasicSearch="false"
+                    useToolbar="true"
+                    liveMode="false"
+                    showRestoreButton="false"
+                    showFilterConfiguration="true"
+                    persistencyKey="SFB_COMPANY"
+                    showClearOnFB="true"
+                />
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <VBox class="sapUiContentPadding">
+                <smartTable:SmartTable
+                    id="smartTable"
+                    entitySet="ZCA_COMPANY"
+                    smartFilterId="smartFilterBar"
+                    tableType="ResponsiveTable"
+                    initiallyVisibleFields=""
+                    requestAtLeastFields="partner,name_org1,crusr,crdat,chusr,chdat,company_status,company_status_code,company_status_txt,fax,phone,email,street,house_number,postal_code,city,country,country_txt"
+                    enableAutoColumnWidth="false"
+                    showRowCount="true"
+                    enableExport="true"
+                    editTogglable="false"
+                    enableAutoBinding="true"
+                    useTablePersonalisation="true"
+                    showTablePersonalisation="true"
+                    useVariantManagement="false"
+                    showVariantManagement="false"
+                    demandPopin="true"
+                    header="{i18n>companyList}"
+                    placeToolbarInTable="true"
+                    initialise="onSmartTableInit"
+                    persistencyKey="ST_COMPANY"
+                >
+                    <smartTable:customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value="{
+                                columns: {
+                                    visible: true
+                                },
+                                sort: {
+                                    visible: true
+                                },
+                                filter: {
+                                    visible: true
+                                },
+                                group: {
+                                    visible: true
+                                }
+                            }"
+                        />
+                    </smartTable:customData>
+
+                    <Table
+                        id="tableCompany"
+                        mode="SingleSelectMaster"
+                        sticky="ColumnHeaders"
+                        itemPress="onItemPress"
+                        growing="true"
+                        growingScrollToLoad="true"
+                        growingThreshold="50"
+                        width="100%"
+                        alternateRowColors="true"
+                    >
+                        <noData>
+                            <HBox
+                                justifyContent="Center"
+                                alignItems="Center"
+                                class="sapUiSmallMargin"
+                            >
+                                <core:Icon
+                                    src="sap-icon://search"
+                                    size="1rem"
+                                    decorative="false"
+                                />
+                                <Text
+                                    text="{i18n>noDataTable}"
+                                    class="sapUiTinyMarginBegin"
+                                />
+                            </HBox>
+                        </noData>
+
+                        <columns>
+                            <Column
+                                demandPopin="true" 
+                                width="20rem"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'partner',
+                                            leadingProperty: 'partner',
+                                            filterProperty: 'partner',
+                                            sortProperty: 'partner',
+                                            type: 'text',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>businessPartner}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true"  
+                                width="16rem"
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'country_txt',
+                                            leadingProperty: 'country_txt',
+                                            filterProperty: 'country_txt',
+                                            sortProperty: 'country_txt',
+                                            type: 'text',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>location}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true" 
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'crusr',
+                                            leadingProperty: 'crusr',
+                                            filterProperty: 'crusr',
+                                            sortProperty: 'crusr',
+                                            type: 'text',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>createdBy}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true"
+                                hAlign="End" 
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'crdat',
+                                            leadingProperty: 'crdat',
+                                            filterProperty: 'crdat',
+                                            sortProperty: 'crdat',
+                                            type: 'date',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>createdOn}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true" 
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'chusr',
+                                            leadingProperty: 'chusr',
+                                            filterProperty: 'chusr',
+                                            sortProperty: 'chusr',
+                                            type: 'text',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>changedBy}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true"
+                                hAlign="End" 
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'chdat',
+                                            leadingProperty: 'chdat',
+                                            filterProperty: 'chdat',
+                                            sortProperty: 'chdat',
+                                            type: 'date',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>changedOn}" />
+                                </header>
+                            </Column>
+
+                            <Column
+                                demandPopin="true"
+                                hAlign="End" 
+                            >
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value="{
+                                            columnKey: 'company_status_txt',
+                                            leadingProperty: 'company_status_txt',
+                                            filterProperty: 'company_status_txt',
+                                            sortProperty: 'company_status_txt',
+                                            type: 'text',
+                                            sortable: true,
+                                            filterable: true
+                                        }"
+                                    />
+                                </customData>
+                                <header>
+                                    <Text text="{i18n>companyStatus}" />
+                                </header>
+                            </Column>
+                        </columns>
+
+                        <items>
+                            <ColumnListItem type="Navigation">
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{name_org1}"
+                                        text="{partner}"
+                                    />
+
+                                    <ObjectIdentifier
+                                        title="{country_txt}"
+                                        text="{city}"
+                                    />
+
+                                    <Text text="{crusr}" />
+
+                                    <Text
+                                        text="{
+                                            path: 'crdat',
+                                            type: 'sap.ui.model.type.Date',
+                                            formatOptions: {
+                                                pattern: 'dd/MM/yyyy'
+                                            }
+                                        }"
+                                    />
+
+                                    <Text text="{chusr}" />
+
+                                    <Text
+                                        text="{
+                                            path: 'chdat',
+                                            type: 'sap.ui.model.type.Date',
+                                            formatOptions: {
+                                                pattern: 'dd/MM/yyyy'
+                                            }
+                                        }"
+                                    />
+
+                                    <ObjectStatus
+                                        text="{company_status_txt}"
+                                        state="{path: 'company_status', formatter: '.formatter.getApprovalState'}"
+                                        icon="{path: 'company_status', formatter: '.formatter.getApprovalIcon'}"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,5 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m" controllerName="zcafleetmanagement.controller.NotFound"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+    <MessagePage showHeader="false" icon="sap-icon://refresh" title="{i18n>NotFound}" text="{i18n>NotFoundText}" description="{i18n>NotFound.description}" />
+</mvc:View>

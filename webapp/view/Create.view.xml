@@ -1,0 +1,205 @@
+<mvc:View
+    controllerName="zcacompanymanagement.controller.Create"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+>
+    <f:DynamicPage
+        id="Create"
+        class="sapUiNoContentPadding"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="{CompanyData>/PageTitle}"
+                        level="H1"
+                        wrapping="true"
+                    />
+                </f:heading>
+                <f:actions>
+                    <Button
+                        id="btnCancel"
+                        type="Default"
+                        icon="sap-icon://decline"
+                        press="onCancelPress"
+                    />
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox
+                class="sapUiSmallMargin"
+                renderType="Bare"
+            >
+                <Panel class="sapUiSmallMarginTop">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <core:Icon src="sap-icon://factory" />
+                            <Title
+                                text="{i18n>companyInfo}"
+                                level="H2"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <content>
+                        <VBox class="sapUiSmallMargin">
+                            <l:Grid
+                                defaultSpan="XL4 L4 M4 S12"
+                                hSpacing="1"
+                                vSpacing="1"
+                            >
+                                <Panel headerText="{i18n>company}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>company}" class="sapUiSmallMarginTop"/>
+                                            <Input
+                                                id="inpCompany"
+                                                value="{CompanyData>/Partner} - {CompanyData>/NameOrg1}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="{i18n>contactInfo}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>mobilePhone}" class="sapUiSmallMarginTop" />
+                                            <Input
+                                                id="inpMobilePhone"
+                                                value="{CompanyData>/Phone}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                            <Label text="{i18n>email}" class="sapUiSmallMarginTop"/>
+                                            <Input
+                                                id="inpEmail"
+                                                value="{CompanyData>/Email}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                            <Label text="{i18n>fax}" class="sapUiSmallMarginTop"/>
+                                            <Input
+                                                id="inpFax"
+                                                value="{CompanyData>/Fax}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                                <Panel headerText="{i18n>address}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>country}" class="sapUiSmallMarginTop"/>
+                                            <Input
+                                                id="inpCountry"
+                                                value="{CompanyData>/Country}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                            <Label text="{i18n>postalCode}" class="sapUiSmallMarginTop" />
+                                            <Input
+                                                id="inpPostalCode"
+                                                value="{CompanyData>/PostalCode}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                            <Label text="{i18n>street}" class="sapUiSmallMarginTop"/>
+                                            <Input
+                                                id="inpStreet"
+                                                value="{CompanyData>/Street}"
+                                                type="Text"
+                                                editable="false"
+                                            />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </VBox>
+                    </content>
+                </Panel>
+
+                <!-- Company Documents -->
+                <Panel
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiMediumMarginBottom sapUiSmallMarginTop"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <core:Icon src="sap-icon://documents" />
+                            <Title text="{i18n>companyDocuments}" />
+                            <ToolbarSpacer />
+
+                            <Button
+                                text="{i18n>add}"
+                                icon="sap-icon://add"
+                                press="onCompanyDocAdd"
+                            />
+
+                            <Button
+                                text="{i18n>edit}"
+                                icon="sap-icon://edit"
+                                press="onCompanyDocEdit"
+                            />
+
+                            <Button
+                                text="{i18n>delete}"
+                                icon="sap-icon://delete"
+                                press="onCompanyDocDelete"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <content>
+                        <List
+                            id="lstCompanyDocumentsChange"
+                            items="{CompanyDocumentsData>/items}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            mode="SingleSelectMaster"
+                            selectionChange="onCompanyDocSelectionChange"
+                        >
+                            <noData>
+                                <HBox
+                                    class="sapUiSmallMargin"
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                >
+                                    <core:Icon
+                                        src="sap-icon://search"
+                                        size="1rem"
+                                        class="sapUiSmallMarginBottom"
+                                    />
+
+                                    <Text
+                                        text="{i18n>noDocuments}"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </noData>
+
+                            <items>
+                                <StandardListItem
+                                    type="Active"
+                                    press="onOpenCompanyDocument"
+                                    icon="sap-icon://pdf-attachment"
+                                    title="{CompanyDocumentsData>DocTitle}"
+                                    description="{CompanyDocumentsData>MandatoryText} - {i18n>validTo}: {path:'CompanyDocumentsData>ValidTo', formatter: '.formatter.dateFormatter'}"
+                                    info="{CompanyDocumentsData>StatusText}"
+                                    infoState="{CompanyDocumentsData>StatusState}"
+                                    infoStateInverted="true"
+                                />
+                            </items>
+                        </List>
+                    </content>
+                </Panel>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,147 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="approvalDialog"
+        title="{ApprovalData>/Title}"
+        class="sapUiContentPadding"
+        icon="sap-icon://message-error"
+        contentWidth="750px"
+        verticalScrolling="true"
+        afterClose="onApprovalDialogAfterClose"
+        beforeOpen="onApprovalDialogBeforeOpen"
+    >
+        <content>
+            <VBox class="sapUiSmallMarginTop sapUiSmallMarginBottom">
+                <Text
+                    text="{i18n>rejectCompanyLabel}"
+                    wrapping="true"
+                    class="sapUiTinyMarginBottom"
+                />
+
+                <!-- Reason Combo -->
+                <VBox class="sapUiSmallMarginTop">
+                    <Label
+                        text="{i18n>reasons}"
+                        labelFor="reasonCombo"
+                    />
+                    <ComboBox
+                        id="reasonCombo"
+                        width="100%"
+                        required="true"
+                        selectedKey="{ApprovalData>/SelectedReasonKey}"
+                        selectionChange="onRejectReasonChange"
+                        items="{
+                            path: '/ZCA_COMPANY_REJECT_REASON_VH'
+                        }"
+                    >
+                        <core:Item
+                            key="{= ${gr_reason} + '|' + ${id_reason} }"
+                            text="{reason_txt}"
+                        />
+                    </ComboBox>
+                </VBox>
+
+                <!-- Document Type Combo -->
+                <VBox
+                    class="sapUiMediumMarginTop"
+                    visible="{ApprovalData>/IsDoc}"
+                >
+                    <Label
+                        text="{i18n>selectDocType}"
+                        labelFor="docTypeCombo"
+                    />
+                    <ComboBox
+                        id="docTypeCombo"
+                        width="100%"
+                        required="{ApprovalData>/IsDoc}"
+                        selectedKey="{ApprovalData>/ArObject}"
+                        selectionChange="onDocTypeChange"
+                        items="{ path: '/ZCA_COMPANY_DOCS_ATC_TYPE_VH' }"
+                    >
+                        <core:Item
+                            key="{doctype}"
+                            text="{doctype_txt}"
+                        />
+                    </ComboBox>
+                </VBox>
+
+                <!-- Other Reason Text Area -->
+                <VBox
+                    class="sapUiMediumMarginTop"
+                    visible="{ApprovalData>/IsOther}"
+                >
+                    <Label
+                        text="{i18n>otherReasonTextArea}"
+                        labelFor="otherReasonTextArea"
+                    />
+                    <TextArea
+                        id="otherReasonTextArea"
+                        width="100%"
+                        rows="5"
+                        value="{ApprovalData>/FreeText}"
+                        placeholder="{i18n>textAreaPlaceholder}"
+                    />
+                </VBox>
+
+                <HBox
+                    class="sapUiMediumMarginTop"
+                    justifyContent="End"
+                >
+                    <Button
+                        text="{i18n>buttonAddReason}"
+                        type="Emphasized"
+                        icon="sap-icon://add"
+                        press="onAddReasonPress"
+                    />
+                </HBox>
+
+                <VBox class="sapUiMediumMarginTop">
+                    <Title
+                        text="{i18n>addedReasons}"
+                        level="H3"
+                    />
+                    <List
+                        items="{ApprovalData>/SavedReasons}"
+                        noDataText="{i18n>noReasons}"
+                        class="sapUiTinyMarginTop"
+                    >
+                        <CustomListItem>
+                            <HBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                                width="100%"
+                            >
+                                <Text wrapping="true" text="{ApprovalData>displayText}" />
+                                <Button
+                                    class="sapUiTinyMarginBegin"
+                                    type="Transparent"
+                                    icon="sap-icon://decline"
+                                    tooltip="{i18n>remove}"
+                                    press="onRemoveSavedReasonPress"
+                                />
+                            </HBox>
+                        </CustomListItem>
+                    </List>
+                </VBox>
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="{ApprovalData>/ConfirmText}"
+                type="Reject"
+                icon="sap-icon://decline"
+                press="onApprovalDialogConfirm"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="{i18n>cancel}"
+                press="onApprovalDialogCancel"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

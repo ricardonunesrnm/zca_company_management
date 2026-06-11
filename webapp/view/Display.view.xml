@@ -1,0 +1,260 @@
+<mvc:View
+    controllerName="zcacompanymanagement.controller.Display"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+>
+    <f:DynamicPage
+        id="Display"
+        class="sapUiNoContentPadding"
+        showFooter="true"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="{CompanyData>/PageTitle}"
+                        level="H1"
+                        wrapping="true"
+                    />
+                </f:heading>
+
+                <f:expandedContent>
+                    <ObjectStatus
+                        class="sapUiTinyMarginTop"
+                        text="{CompanyData>/CompanyStatusText}"
+                        state="{ path: 'CompanyData>/CompanyStatus', formatter: '.formatter.getApprovalState' }"
+                        icon="{ path: 'CompanyData>/CompanyStatus', formatter: '.formatter.getApprovalIcon' }"
+                    />
+                </f:expandedContent>
+
+                <f:snappedContent>
+                    <ObjectStatus
+                        class="sapUiTinyMarginTop"
+                        text="{CompanyData>/CompanyStatusText}"
+                        state="{ path: 'CompanyData>/CompanyStatus', formatter: '.formatter.getApprovalState' }"
+                        icon="{ path: 'CompanyData>/CompanyStatus', formatter: '.formatter.getApprovalIcon' }"
+                    />
+                </f:snappedContent>
+
+                <f:navigationActions>
+                    <Button
+                        id="btnEditCompanyDocs"
+                        icon="sap-icon://edit"
+                        type="Emphasized"
+                        tooltip="{i18n>edit}"
+                        press="onEditPress"
+                    />
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox
+                class="sapUiSmallMargin"
+                renderType="Bare"
+            >
+                <Panel class="sapUiSmallMarginTop">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <core:Icon src="sap-icon://factory" />
+                            <Title
+                                text="{i18n>companyInfo}"
+                                level="H2"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <content>
+                        <VBox
+                            renderType="Bare"
+                            class="sapUiSmallMargin"
+                        >
+                            <l:Grid
+                                defaultSpan="XL4 L4 M4 S12"
+                                hSpacing="1"
+                                vSpacing="1"
+                            >
+                                <Panel headerText="{i18n>company}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>businessPartner}" />
+                                            <Text
+                                                text="{CompanyData>/Partner} - {CompanyData>/NameOrg1}"
+                                                wrapping="true"
+                                            />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+
+                                <Panel headerText="{i18n>contactInfo}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>mobilePhone}" />
+                                            <Text
+                                                text="{CompanyData>/Phone}"
+                                                wrapping="true"
+                                            />
+
+                                            <Label
+                                                text="{i18n>email}"
+                                                class="sapUiSmallMarginTop"
+                                            />
+                                            <Text
+                                                text="{CompanyData>/Email}"
+                                                wrapping="true"
+                                            />
+
+                                            <Label
+                                                text="{i18n>fax}"
+                                                class="sapUiSmallMarginTop"
+                                            />
+                                            <Text
+                                                text="{CompanyData>/Fax}"
+                                                wrapping="true"
+                                            />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+
+                                <Panel headerText="{i18n>address}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <Label text="{i18n>country}" />
+                                            <Text text="{CompanyData>/CountryText}" wrapping="true" />
+
+                                            <Label text="{i18n>postalCode}" class="sapUiSmallMarginTop" />
+                                            <Text text="{CompanyData>/PostalCode} {CompanyData>/City}" wrapping="true" />
+ 
+                                            <Label text="{i18n>street}" class="sapUiSmallMarginTop" />
+                                            <Text text="{= ${CompanyData>/HouseNumber} !== '' ? ${CompanyData>/Street} + ', ' + ${CompanyData>/HouseNumber} : ${CompanyData>/Street} }" wrapping="true" />
+                                        </VBox>
+                                    </content>
+                                </Panel>
+                            </l:Grid>
+                        </VBox>
+                    </content>
+                </Panel>
+
+                <!-- Company tab => Reject Reason  -->
+                <Panel
+                    visible="{= ${CompanyData>/CompanyStatus} === 'E0003'}"
+                    class="sapUiSmallMarginTop"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <core:Icon src="sap-icon://message-error" />
+                            <Title
+                                text="{i18n>rejectReason}"
+                                level="H3"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <content>
+                        <MessageStrip
+                            text="{CompanyData>/RejectReason}"
+                            type="Error"
+                            showIcon="false"
+                        />
+                    </content>
+                </Panel>
+
+                <Panel
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiMediumMarginBottom sapUiSmallMarginTop"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <core:Icon src="sap-icon://documents" />
+                            <Title
+                                text="{i18n>companyDocuments}"
+                                level="H2"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+
+                    <content>
+                        <List
+                            id="lstCompanyDocumentsDisplay"
+                            items="{CompanyDocumentsData>/items}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            noDataText="{i18n>noDocuments}"
+                        >
+                            <noData>
+                                <HBox
+                                    class="sapUiSmallMargin"
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                >
+                                    <core:Icon
+                                        src="sap-icon://search"
+                                        size="1rem"
+                                        class="sapUiSmallMarginBottom"
+                                    />
+                                    <Text
+                                        text="{i18n>noDocuments}"
+                                        class="sapUiTinyMarginBegin"
+                                    />
+                                </HBox>
+                            </noData>
+                            <items>
+                                <StandardListItem
+                                    type="Active"
+                                    press="onOpenCompanyDocument"
+                                    icon="sap-icon://pdf-attachment"
+                                    title="{CompanyDocumentsData>DocTitle}"
+                                    description="{CompanyDocumentsData>MandatoryText} - {i18n>validTo}: {path:'CompanyDocumentsData>ValidTo', formatter: '.formatter.dateFormatter'}"
+                                    info="{CompanyDocumentsData>StatusText}"
+                                    infoState="{CompanyDocumentsData>StatusState}"
+                                    infoStateInverted="true"
+                                />
+                            </items>
+                        </List>
+                    </content>
+                </Panel>
+            </VBox>
+        </f:content>
+        <!-- Approve/Reject Buttons -->
+        <f:footer>
+            <OverflowToolbar>
+                <core:Icon src="sap-icon://BusinessSuiteInAppSymbols/icon-review-supplies" />
+                <Title text="{i18n>approvalActionText}">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Title>
+
+                <ToolbarSpacer />
+
+                    <Button
+                        id="btnReject"
+                        text="{i18n>reject}"
+                        type="Reject"
+                        icon="sap-icon://decline"
+                        press="onRejectPress"
+                    >
+                        <layoutData>
+                            <OverflowToolbarLayoutData priority="High" />
+                        </layoutData>
+                    </Button>
+
+                    <Button
+                        id="btnApprove"
+                        text="{i18n>approve}"
+                        type="Accept"
+                        icon="sap-icon://accept"
+                        press="onApprovePress"
+                    >
+                        <layoutData>
+                            <OverflowToolbarLayoutData priority="High" />
+                        </layoutData>
+                    </Button>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
