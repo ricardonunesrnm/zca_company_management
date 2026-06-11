@@ -53,19 +53,21 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController", "sap/ui/model/
       return { Action: "", Title: "", Message: "", ConfirmText: "", SelectedReasonKey: "", SelectedGrReason: "", SelectedGrReasonText: "", SelectedIdReason: "", SelectedReasonText: "", ArObject: "", ArObjectText: "", FreeText: "", IsDoc: false, IsOther: false, SavedReasons: [], HasSavedReasons: false };
     },
 
+    
     onDisplayMatched: function (oEvent) {
       var sPartner = oEvent.getParameter("arguments").partner;
 
-      // this.setShellBackButton(function () {
-      //   sessionStorage.setItem("goToLaunchpad", "X");
-      //   this.getRouter().navTo("RouteMain", {}, true);
-      // }.bind(this));
+      this.setShellBackButton(function () {
+        sessionStorage.setItem("goToLaunchpad", "X");
+        this.getRouter().navTo("RouteMain", {}, true);
+      }.bind(this));
 
       if (!sPartner) {
         sessionStorage.setItem("goToLaunchpad", "X");
         this.getRouter().navTo("RouteMain", {}, true);
         return;
       }
+ 
 
       sessionStorage.setItem("goToLaunchpad", "");
 
@@ -225,8 +227,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController", "sap/ui/model/
         }
       ).then(function (oData) {
         return (oData && oData.reason) || "";
-      }).catch(function () {
-        // console.error("Error loading reject reason:", oError);
+      }).catch(function () { 
         return "";
       });
     },

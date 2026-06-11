@@ -12,7 +12,8 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
       this._pCompanyDocTypes = null;
 
       this.setShellBackButton(function () {
-        this.onCancelPress();
+        sessionStorage.setItem("goToLaunchpad", "X");
+        this.getRouter().navTo("RouteMain", {}, true); 
       }.bind(this));
 
       this.setModel(new JSONModel(this._getEmptyCompanyData()), "CompanyData");
@@ -37,7 +38,6 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
     _getEmptyCompanyData: function () {
       return { Mode: "edit", PageTitle: "", Partner: "", NameOrg1: "", CompanyStatus: "", CompanyStatusCode: "", CompanyStatusText: "", Phone: "", Email: "", Fax: "", Street: "", HouseNumber: "", PostalCode: "", City: "", Country: "", CountryText: "" };
     },
-
 
     _getEmptyUiState: function () {
       return { companyDocSelectedIndex: -1, companyDocListEnabled: false, companyDocAddEnabled: false, companyDocEditEnabled: false, companyDocDelEnabled: false };
