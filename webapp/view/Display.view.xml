@@ -9,7 +9,7 @@
     <f:DynamicPage
         id="Display"
         class="sapUiNoContentPadding"
-        showFooter="true"
+        showFooter="{= ${CompanyData>/Permission} === 'X' }"
     >
         <f:title>
             <f:DynamicPageTitle>
@@ -220,7 +220,7 @@
             </VBox>
         </f:content>
         <!-- Approve/Reject Buttons -->
-        <f:footer>
+        <f:footer >
             <OverflowToolbar>
                 <core:Icon src="sap-icon://BusinessSuiteInAppSymbols/icon-review-supplies" />
                 <Title text="{i18n>approvalActionText}">

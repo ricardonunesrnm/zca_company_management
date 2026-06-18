@@ -129,7 +129,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController", "sap/ui/model/
         }),
         {
           urlParameters: {
-            $select: [ "partner", "name_org1", "crusr", "crdat", "chusr", "chdat", "company_status", "company_status_code", "company_status_txt", "fax", "phone", "email", "street", "house_number", "postal_code", "city", "country", "country_txt" ].join(",")
+            $select: [ "partner", "name_org1", "crusr", "crdat", "chusr", "chdat", "company_status", "company_status_code", "company_status_txt", "fax", "phone", "email", "street", "house_number", "postal_code", "city", "country", "country_txt", "permission" ].join(",")
           }
         }
       ).then(function (oData) {
@@ -156,7 +156,8 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController", "sap/ui/model/
           City: oData.city || "", 
           Country: oData.country || "",
           CountryText: oData.country_txt || "",
-          PageTitle: sName ? sName : sPartnerId
+          PageTitle: sName ? sName : sPartnerId,
+          Permission: oData.permission || ""
         });
       }.bind(this));
     },
