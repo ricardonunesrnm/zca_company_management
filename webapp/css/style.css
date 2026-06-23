@@ -1,1 +1,19 @@
-/* Enter your custom styles here */
+.variantSwitch .sapMBtnInner{
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.variantSwitch .sapMBtnContent{
+  color: #0070f2 !important;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  font-family: "72Black", "72Blackfull", "72", "72full", Arial, Helvetica, sans-serif;
+}
+
+.variantSwitch .sapUiIcon{
+  color: #0070f2 !important;
+  font-size: 2rem !important;
+  margin-left: .25rem !important;
+  line-height: 1.5rem !important;
+}

@@ -44,7 +44,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
     },
 
     _getEmptyDocumentDialogData: function () {
-      return { Mode: "add", Index: -1, DocType: "", DocName: "", ArcDocId: "", ValidTo: null, ValidToText: "", FileName: "", FileB64: "", FileChanged: false, ManualReadConfirmed: false };
+      return { Mode: "add", Index: -1, DocType: "", DocName: "", ArcDocId: "", ValidTo: null, ValidToText: "", FileName: "", FileB64: "", FileExt: "", FileChanged: false, ManualReadConfirmed: false };
     },
 
     _getEmptyValueHelpData: function () {
@@ -297,7 +297,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
     _resetDocumentDialogControls: function () {
       var oHiddenDP = this.byId("HiddenDP");
       var oInp = this.byId("inpValidTo");
-      var oUploader = this.byId("fuDocument");
+      var oUploader = this.byId("fuDoc");
 
       if (oHiddenDP) {
         oHiddenDP.setDateValue(null);
@@ -597,33 +597,75 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
       var oDocDlg = this.getModel("DocumentDialogData");
       var oFile;
       var sName;
-      var oReader;
+      var sExt;
+      var oRB = this.getResourceBundle();
 
-      if (!aFiles || !aFiles.length) return;
+      var fnClearUploader = function () {
+        if (oFileUploader && oFileUploader.clear) {
+          try {
+            oFileUploader.clear();
+          } catch (e) {}
+        }
+      };
+
+      if (!aFiles || !aFiles.length) {
+        return;
+      }
 
       oFile = aFiles[0];
       sName = oFile && oFile.name ? oFile.name : "";
+      sExt = sName.indexOf(".") >= 0 ? sName.split(".").pop().toUpperCase() : "";
+
+      if (sExt === "JPEG") {
+        sExt = "JPG";
+      }
+
+      if (["PDF", "JPG", "PNG"].indexOf(sExt) === -1) {
+        MessageBox.error(oRB.getText("msgInvalidFileType"));
+
+        oDocDlg.setProperty("/FileName", "");
+        oDocDlg.setProperty("/FileB64", "");
+        oDocDlg.setProperty("/FileExt", "");
+        oDocDlg.setProperty("/FileChanged", false);
+
+        fnClearUploader();
+        return;
+      }
 
       oDocDlg.setProperty("/FileName", sName);
       oDocDlg.setProperty("/FileB64", "");
+      oDocDlg.setProperty("/FileExt", "PDF");
       oDocDlg.setProperty("/FileChanged", true);
 
-      oReader = new FileReader();
+      if (sExt === "PDF") {
+        this._readFileAsBase64(oFile)
+          .then(function (sBase64) {
+            oDocDlg.setProperty("/FileB64", sBase64);
+            oDocDlg.setProperty("/FileExt", "PDF");
+          })
+          .catch(function () {
+            MessageBox.error(oRB.getText("msgErrorReadFile"));
+            oDocDlg.setProperty("/FileB64", "");
+            oDocDlg.setProperty("/FileExt", "");
+            oDocDlg.setProperty("/FileChanged", false);
+          })
+          .finally(fnClearUploader);
 
-      oReader.onload = function (e) {
-        var sRes = e && e.target && e.target.result ? String(e.target.result) : "";
-        var sB64 = sRes.indexOf(",") >= 0 ? sRes.split(",")[1] : sRes;
-
-        oDocDlg.setProperty("/FileB64", sB64);
-      };
-
-      oReader.readAsDataURL(oFile);
-
-      if (oFileUploader && oFileUploader.clear) {
-        try {
-          oFileUploader.clear();
-        } catch (e) {}
+        return;
       }
+
+      this._imageFileToPdfBase64(oFile)
+        .then(function (sPdfBase64) {
+          oDocDlg.setProperty("/FileB64", sPdfBase64);
+          oDocDlg.setProperty("/FileExt", "PDF");
+        })
+        .catch(function () {
+          MessageBox.error(oRB.getText("msgErrorConvertImageToPdf"));
+          oDocDlg.setProperty("/FileB64", "");
+          oDocDlg.setProperty("/FileExt", "");
+          oDocDlg.setProperty("/FileChanged", false);
+        })
+        .finally(fnClearUploader);
     },
 
     onDocDlgSave: function () {
@@ -799,7 +841,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
           doc_type: d.DocType,
           document_name: sDocName,
           valid_to: oValidTo,
-          attachment: d.FileB64
+          attachment: d.FileB64 
         };
 
         this.createOEntity("/ZCA_COMPANY_DOCS", oPayload)
@@ -832,7 +874,7 @@ sap.ui.define([ "zcacompanymanagement/controller/BaseController","sap/ui/core/Fr
       oPayload = {
         valid_to: oValidTo,
         document_name: sDocName,
-        attachment: d.FileChanged === true ? d.FileB64 : ""
+        attachment: d.FileChanged === true ? d.FileB64 : "" 
       };
 
       this.updateOEntity(sPath, oPayload, { merge: true })

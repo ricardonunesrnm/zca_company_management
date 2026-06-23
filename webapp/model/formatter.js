@@ -37,35 +37,14 @@ sap.ui.define(["sap/ui/core/format/DateFormat"], function (DateFormat) {
       return "";
     },
 
-    // getConditionalText: function (isActive, companyStatusTxt) {
-    //   if (formatter._isActive(isActive)) {
-    //     return companyStatusTxt;
-    //   }
 
-    //   return this.getView().getModel("i18n").getResourceBundle().getText("partnerDeactivated");
-    // },
-
-    // _isActive: function (value) {
-    //   return value === "A" || value === true;
-    // },
-
-    getConditionalState: function (isActive, companyStatus) {
-      // if (!formatter._isActive(isActive)) {
-      //   return "None";
-      // }
+    getConditionalState: function (companyStatus) {
       return formatter.getApprovalState(companyStatus);
     },
 
-    getConditionalIcon: function (isActive, companyStatus) {
-      // if (!formatter._isActive(isActive)) {
-      //   return "sap-icon://locked";
-      // }
+    getConditionalIcon: function (companyStatus) {
       return formatter.getApprovalIcon(companyStatus);
     },
-
-    // getActiveHighlight: function (value) {
-    //   return formatter._isActive(value) ? "None" : "Error";
-    // }
   };
 
   return formatter;

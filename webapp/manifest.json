@@ -34,10 +34,7 @@
         "uri": "/sap/opu/odata/sap/ZODCA_COMPANY_MANAGEMENT_SRV/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "ZODCA_COMPANY_MANAGEMEN_ANNO_MDL",
-            "annotation"
-          ],
+          "annotations": ["ZODCA_COMPANY_MANAGEMEN_ANNO_MDL", "annotation"],
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "2.0"
         }
@@ -94,6 +91,11 @@
       "css": [
         {
           "uri": "css/style.css"
+        }
+      ],
+      "js": [
+        {
+          "uri": "libs/jsPDF.js"
         }
       ]
     },
