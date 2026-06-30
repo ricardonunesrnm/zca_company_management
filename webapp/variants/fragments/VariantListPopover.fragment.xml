@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <ResponsivePopover id="Popover" contentWidth="20%" contentHeight="25%" placement="Bottom" title="{i18n>variants.MyViews}">
+        <beginButton>
+            <Button text="{i18n>variants.SaveAs}" type="Emphasized" press=".onVariantSaveAsPress"/>
+        </beginButton>
+
+        <endButton>
+            <Button text="{i18n>variants.Manage}" press=".onVariantManagePress"/>
+        </endButton>
+
+        <content>
+            <List id="VariantList" mode="SingleSelectMaster" items="{vModel>/ZCA_USR_VARIANTS_DD}" updateFinished=".onVariantListUpdateFinished" selectionChange=".onVariantListSelectionChange">
+
+                <StandardListItem title="{vModel>v_name}"/>
+            </List>
+        </content>
+    </ResponsivePopover>
+</core:FragmentDefinition>

@@ -127,7 +127,6 @@
 
                                             <Label text="{i18n>postalCode}" class="sapUiSmallMarginTop" />
                                             <Text text="{CompanyData>/PostalCode} {CompanyData>/City}" wrapping="true" />
- 
                                             <Label text="{i18n>street}" class="sapUiSmallMarginTop" />
                                             <Text text="{= ${CompanyData>/HouseNumber} !== '' ? ${CompanyData>/Street} + ', ' + ${CompanyData>/HouseNumber} : ${CompanyData>/Street} }" wrapping="true" />
                                         </VBox>
@@ -220,9 +219,11 @@
             </VBox>
         </f:content>
         <!-- Approve/Reject Buttons -->
-        <f:footer >
+        <f:footer>
             <OverflowToolbar>
-                <core:Icon src="sap-icon://BusinessSuiteInAppSymbols/icon-review-supplies" />
+                <core:Icon
+                    src="sap-icon://BusinessSuiteInAppSymbols/icon-review-supplies"
+                />
                 <Title text="{i18n>approvalActionText}">
                     <layoutData>
                         <OverflowToolbarLayoutData priority="NeverOverflow" />
@@ -231,29 +232,29 @@
 
                 <ToolbarSpacer />
 
-                    <Button
-                        id="btnReject"
-                        text="{i18n>reject}"
-                        type="Reject"
-                        icon="sap-icon://decline"
-                        press="onRejectPress"
-                    >
-                        <layoutData>
-                            <OverflowToolbarLayoutData priority="High" />
-                        </layoutData>
-                    </Button>
+                <Button
+                    id="btnReject"
+                    text="{i18n>reject}"
+                    type="Reject"
+                    icon="sap-icon://decline"
+                    press="onRejectPress"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
 
-                    <Button
-                        id="btnApprove"
-                        text="{i18n>approve}"
-                        type="Accept"
-                        icon="sap-icon://accept"
-                        press="onApprovePress"
-                    >
-                        <layoutData>
-                            <OverflowToolbarLayoutData priority="High" />
-                        </layoutData>
-                    </Button>
+                <Button
+                    id="btnApprove"
+                    text="{i18n>approve}"
+                    type="Accept"
+                    icon="sap-icon://accept"
+                    press="onApprovePress"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="High" />
+                    </layoutData>
+                </Button>
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

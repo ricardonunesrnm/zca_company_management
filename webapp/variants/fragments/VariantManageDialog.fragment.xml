@@ -1,0 +1,88 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="Dialog" title="{i18n>variants.Manageviews}" contentWidth="70rem" contentHeight="28rem" draggable="true" resizable="true">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <SearchField width="100%" placeholder="{i18n>variants.Search}" liveChange=".onManageSearch"/>
+
+                <Table id="Table" inset="false" growing="true" growingScrollToLoad="true" items="{vModel>/ZCA_USR_VARIANTS_DD}">
+                    <columns>
+                        <Column width="2.5rem">
+                            <header>
+                                <Label text=""/>
+                            </header>
+                        </Column>
+
+                        <Column>
+                            <header>
+                                <Label text="{i18n>variants.View}"/>
+                            </header>
+                        </Column>
+
+                        <Column hAlign="Center" width="8rem">
+                            <header>
+                                <Label text="{i18n>variants.Default}"/>
+                            </header>
+                        </Column>
+
+                        <Column hAlign="Center" width="12rem">
+                            <header>
+                                <Label text="{i18n>variants.ApplyAutomatically}"/>
+                            </header>
+                        </Column>
+
+                        <Column width="10rem">
+                            <header>
+                                <Label text="{i18n>variants.CreatedBy}"/>
+                            </header>
+                        </Column>
+
+                        <Column width="10rem">
+                            <header>
+                                <Label text="{i18n>variants.CreatedAt}"/>
+                            </header>
+                        </Column>
+
+                        <Column width="3rem">
+                            <header>
+                                <Label text=""/>
+                            </header>
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem highlight="{path:'vModel>variant_id', formatter:'.onFmtRowHighlight'}">
+                            <cells>
+
+                                <core:Icon src="sap-icon://favorite" visible="{= ${vModel>variant_id} === 'Main' }"/>
+
+                                <Text text="{vModel>v_name}"/>
+                                
+                                <RadioButton groupName="vmDefault" selected="{= ${vModel>v_default} === true }" select=".onVariantDefaultSelect"/>
+
+                                <CheckBox selected="{vModel>v_apply_auto}" enabled="{= ${vModel>variant_id} !== 'Main' }"/>
+
+                                <Text text="{vModel>created_by}"/>
+
+                                <Text text="{path: 'vModel>created_at', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd-MM-yyyy' } }"/>
+
+                                <Button icon="{path:'vModel>variant_id', formatter:'.onFmtDeleteIcon'}" tooltip="{path:'vModel>variant_id', formatter:'.onFmtDeleteTooltip'}" type="Transparent" visible="{= ${vModel>variant_id} !== 'Main' }" press=".onVariantDeletePress"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+
+                </Table>
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button text="{i18n>variants.Save}" type="Emphasized" press=".onVariantManageSave"/>
+        </beginButton>
+
+        <endButton>
+            <Button text="{i18n>variants.Cancel}" press=".onVariantManageCancel"/>
+        </endButton>
+
+    </Dialog>
+</core:FragmentDefinition>

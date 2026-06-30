@@ -15,14 +15,13 @@ sap.ui.define([
 
         var urlParams = new URLSearchParams(window.location.search);
         var token = urlParams.get("token");
+
         this.setModelCA(token);
+        
         if (!sessionStorage.getItem("oLangu"))
           sap.ui.getCore().getConfiguration().setLanguage("EN");
         else {
-          sap.ui
-            .getCore()
-            .getConfiguration()
-            .setLanguage(sessionStorage.getItem("oLangu"));
+          sap.ui.getCore().getConfiguration().setLanguage(sessionStorage.getItem("oLangu"));
         }
 
         var fnSetAppNotBusy = function () {

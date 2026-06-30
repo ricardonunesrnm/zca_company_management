@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog id="Dialog" title="{i18n>variants.SaveView}" contentWidth="24rem" draggable="true" resizable="true">
+
+        <content>
+            <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                <Label text="{i18n>variants.View}"/>
+                <Input value="{appView>/variantDraft/name}" />
+
+                <CheckBox text="{i18n>variants.SetDefault}" selected="{appView>/variantDraft/default}" />
+            </f:SimpleForm>
+        </content>
+    
+        <buttons>
+            <Button text="{i18n>variants.Save}" type="Emphasized" press=".onVariantSaveConfirm"/>
+            <Button text="{i18n>variants.Close}" press=".onVariantSaveCancel"/>
+        </buttons>
+
+    </Dialog>
+
+</core:FragmentDefinition>

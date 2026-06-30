@@ -28,16 +28,22 @@
 
         <f:header>
             <f:DynamicPageHeader pinnable="true">
+                <Button
+                    id="btnVariant"
+                    text="{appView>/variantInput}"
+                    type="Transparent"
+                    icon="sap-icon://slim-arrow-down"
+                    iconFirst="false"
+                    press="onShowVariantList"
+                    class="variantSwitch" />
+                
                 <sfb:SmartFilterBar
                     id="smartFilterBar"
                     entitySet="ZCA_COMPANY"
-                    enableBasicSearch="false"
-                    useToolbar="true"
-                    liveMode="false"
-                    showRestoreButton="false"
-                    showFilterConfiguration="true"
-                    persistencyKey="SFB_COMPANY"
-                    showClearOnFB="true"
+                    useVariantManagement="false"
+                    showVariantManagement="false"
+                    showFilterConfiguration="true" 
+                    showClearOnFB="false"
                 />
             </f:DynamicPageHeader>
         </f:header>
@@ -57,7 +63,7 @@
                     editTogglable="false"
                     enableAutoBinding="true"
                     useTablePersonalisation="true"
-                    showTablePersonalisation="true"
+                    showTablePersonalisation="false"
                     useVariantManagement="false"
                     showVariantManagement="false"
                     demandPopin="true"

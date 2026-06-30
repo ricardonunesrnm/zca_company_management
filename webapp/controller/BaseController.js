@@ -27,6 +27,16 @@ sap.ui.define(
           });
 
           this.setModel(CAModel);
+
+          var vModel = new sap.ui.model.odata.v2.ODataModel({
+                serviceUrl: "/sap/opu/odata/sap/ZODCA_VARIANTS_MANAGEMENT_SRV",
+                headers: {
+                    "authorization": token,
+                    "applicationName": "ZCA_COMPANY"
+                }
+            });
+
+          this.setModel(vModel, "vModel");
       },
 
       getUserAuthentication: function (type) {
